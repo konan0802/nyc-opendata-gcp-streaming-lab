@@ -2,10 +2,10 @@
 
 ## 1. システム概要
 
-NYC Open Dataからリアルタイムデータを取得し、Google Cloud Platform（GCP）上でストリーミング処理を行い、BigQueryに格納するETLパイプラインを構築します。
+[NYC Open Data](https://opendata.cityofnewyork.us/) からリアルタイムデータを取得し、Google Cloud Platform（GCP）上でストリーミング処理を行い、BigQueryに格納するETLパイプラインを構築します。
 
 ### 目的
-- NYC Open DataのAPIから継続的にデータを取得
+- [NYC Open Data](https://opendata.cityofnewyork.us/) のAPIから継続的にデータを取得
 - リアルタイムでデータを変換・加工
 - BigQueryに格納し、分析可能な状態にする
 - スケーラブルで信頼性の高いデータパイプラインの構築
