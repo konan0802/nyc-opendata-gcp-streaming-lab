@@ -32,17 +32,18 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 ### 1.1 環境セットアップ
 
 #### GCPプロジェクト初期設定
-- [ ] GCPプロジェクト作成
-- [ ] 必要なAPIの有効化
+- [×] GCPプロジェクト作成
+- [×] 必要なAPIの有効化
   - Cloud Functions API
   - Cloud Scheduler API
   - Pub/Sub API
   - BigQuery API
   - Secret Manager API
   - Cloud Storage API
-- [ ] サービスアカウント作成
-  - Cloud Function実行用
-  - Terraform実行用
+  - IAM API
+- [ ] Terraform実行用サービスアカウント作成
+  - 必要なロール付与（Editor or 個別ロール）
+  - JSON キーのダウンロード
 
 #### ローカル開発環境構築
 - [ ] Python 3.11+ インストール
@@ -61,6 +62,7 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
   ```
   terraform/
   ├── modules/
+  │   ├── iam/               # サービスアカウント・ロール管理
   │   ├── bigquery/
   │   ├── pubsub/
   │   ├── cloud-function/
@@ -72,6 +74,14 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 - [ ] バックエンド設定（GCS）
 - [ ] 変数定義ファイル作成
 - [ ] `.kiro/steering/deployment.md` 作成（Terraform導入時）
+
+#### IAMリソース（Terraform）
+- [ ] Cloud Function実行用サービスアカウント作成
+- [ ] 必要なロール付与
+  - Pub/Sub Publisher
+  - Cloud Storage Object Viewer（状態管理用）
+  - Secret Manager Secret Accessor
+  - Cloud Logging Writer
 
 #### BigQueryリソース（Terraform）
 - [ ] データセット作成
@@ -85,6 +95,7 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 - [ ] BigQuery Subscriptionの作成
 - [ ] Dead Letter Topic設定
 - [ ] IAMロール設定
+  - Pub/Sub Service Account → BigQuery Data Editor（書き込み用）
 
 #### Cloud Storageリソース（Terraform）
 - [ ] 状態管理バケット作成
@@ -141,10 +152,11 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 #### デプロイ（Terraform）
 - [ ] Cloud Function リソース定義
 - [ ] 環境変数設定
-- [ ] IAMロール設定
+- [ ] サービスアカウントのアタッチ（Cloud Function実行用）
 - [ ] Cloud Scheduler作成
   - [ ] 実行間隔設定（5分毎）
   - [ ] タイムゾーン設定（America/New_York）
+  - [ ] Cloud Scheduler Service Account → Cloud Functions Invoker
 
 ---
 
@@ -418,5 +430,5 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 
 ---
 
-**最終更新**: 2026-01-08
+**最終更新**: 2026-01-08（サービスアカウント管理を修正）
 
