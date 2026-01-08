@@ -2,28 +2,35 @@
 
 ## Organization Philosophy
 
-**設計ドキュメント中心、実装未着手の実験プロジェクト**
+**実験・学習用プロジェクト、実装開始段階**
 
-- 現状: ドキュメント（設計・実装計画）とサンプルデータのみ
-- 今後: Terraformによるインフラ定義と、Cloud Functions実装を予定
+- 単一環境（検証用GCPプロジェクト）でのシンプルな構成
+- Terraformセットアップ完了、インフラリソース作成前
+- Cloud Functions実装は未着手
 
 ## Directory Patterns
 
-### Terraform Infrastructure（予定）
+### Terraform Infrastructure
 **Location**: `/terraform/`  
 **Purpose**: GCPリソースのIaC定義  
 **Structure**:
 ```
 terraform/
-├── modules/           # 再利用可能なモジュール
-│   ├── bigquery/
-│   ├── pubsub/
-│   ├── cloud-function/
-│   └── monitoring/
-└── environments/      # 環境別設定
-    ├── dev/
-    └── prod/
+├── main.tf           # メインリソース定義
+├── variables.tf      # 変数定義（今後追加）
+├── terraform.tfvars  # 変数の値
+├── outputs.tf        # 出力定義（今後追加）
+└── .terraform/       # Terraformの内部ファイル（自動生成）
 ```
+
+**設計判断**:
+- **単一環境プロジェクト**: dev/prod分離は不要（検証用プロジェクト）
+- **フラット構造**: シンプルさを優先、複雑化を避ける
+- **将来的な拡張**: 必要に応じて `modules/` ディレクトリを追加可能
+
+**サービスアカウント管理**:
+- Terraform実行用: `~/.gcp/terraform-sa-{PROJECT_ID}.json`（手動作成）
+- その他のサービスアカウント: Terraformで管理
 
 ### Cloud Functions（予定）
 **Location**: `/functions/` または `/src/`  
@@ -34,9 +41,13 @@ terraform/
 **Location**: ルートディレクトリ  
 **Files**:
 - `README.md`: プロジェクト概要
-- `DESIGN.md`: システム設計詳細
-- `IMPLEMENTATION.md`: 実装計画・コスト見積もり
+- `BACKLOG.md`: 実装タスク・コスト見積もり・運用計画
 - `AGENTS.md`: AI-DLC / Kiroワークフロー説明
+
+### Specifications
+**Location**: `.kiro/specs/`  
+**Purpose**: Feature単位の詳細仕様  
+**Pattern**: 各featureは独立したディレクトリで管理（requirements, design, tasks）
 
 ### Data
 **Location**: ルートディレクトリ  

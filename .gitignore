@@ -72,6 +72,8 @@ poetry.lock
 *-key.json
 service-account*.json
 gcp-*.json
+*.json
+!package.json
 
 # Logs
 *.log

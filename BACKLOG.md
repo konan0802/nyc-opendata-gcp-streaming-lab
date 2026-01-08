@@ -41,14 +41,17 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
   - Secret Manager API
   - Cloud Storage API
   - IAM API
-- [ ] Terraform実行用サービスアカウント作成
-  - 必要なロール付与（Editor or 個別ロール）
-  - JSON キーのダウンロード
+- [×] Terraform実行用サービスアカウント作成（完了: `/kiro/spec` terraform-service-account-setup）
+  - サービスアカウント作成: `terraform-sa@for-study-20251201.iam.gserviceaccount.com`
+  - Editorロール付与（開発環境向け）
+  - JSONキー生成: `~/.gcp/terraform-sa-for-study-20251201.json`
+  - プロジェクト別alias設定: `tf-for-study-20251201`
+  - 動作確認完了
 
 #### ローカル開発環境構築
-- [ ] Python 3.11+ インストール
-- [ ] gcloud CLI インストール・認証
-- [ ] Terraform インストール
+- [×] Python 3.11+ インストール（Python 3.13.7確認済み）
+- [×] gcloud CLI インストール・認証
+- [×] Terraform インストール
 - [ ] NYC Open Data App Token取得
 
 ---
@@ -58,21 +61,19 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 > **Spec推奨**: `/kiro/spec-init "infrastructure"` で管理
 
 #### Terraformセットアップ
-- [ ] Terraformディレクトリ構成作成
+- [×] Terraformディレクトリ構成作成（完了: サービスアカウント動作確認済み）
   ```
   terraform/
-  ├── modules/
-  │   ├── iam/               # サービスアカウント・ロール管理
-  │   ├── bigquery/
-  │   ├── pubsub/
-  │   ├── cloud-function/
-  │   └── monitoring/
-  └── environments/
-      ├── dev/
-      └── prod/
+  ├── main.tf              # 現在: プロジェクト情報取得（動作確認用）
+  ├── terraform.tfvars     # プロジェクトID設定
+  ├── variables.tf         # 今後追加: 変数定義
+  └── outputs.tf           # 今後追加: 出力定義
   ```
-- [ ] バックエンド設定（GCS）
-- [ ] 変数定義ファイル作成
+  **設計判断**: 単一環境プロジェクトのため、フラット構造を採用（modules/environments不使用）
+- [ ] バックエンド設定（GCS）（オプション: 単一環境では不要かも）
+- [ ] 既存main.tfをインフラリソース定義に置き換え
+- [ ] variables.tf 作成
+- [ ] outputs.tf 作成
 - [ ] `.kiro/steering/deployment.md` 作成（Terraform導入時）
 
 #### IAMリソース（Terraform）
@@ -430,5 +431,15 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 
 ---
 
-**最終更新**: 2026-01-08（サービスアカウント管理を修正）
+## 実装済みSpecifications
+
+- ✅ **terraform-service-account-setup** (完了: 2026-01-08)
+  - Requirements: 8件
+  - Design: ステップベース手順設計
+  - Tasks: 20/24完了 (83%)
+  - 成果物: サービスアカウント、JSONキー、alias設定、Terraform初期化
+
+---
+
+**最終更新**: 2026-01-08（Terraform実行用SA完了、Python 3.13.7確認、構造を実態に合わせて修正）
 
