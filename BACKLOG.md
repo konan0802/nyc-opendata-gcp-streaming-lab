@@ -52,7 +52,10 @@ NYC OpenData GCP ストリーミングETLシステムの実装タスク、コス
 - [×] Python 3.11+ インストール（Python 3.13.7確認済み）
 - [×] gcloud CLI インストール・認証
 - [×] Terraform インストール
-- [ ] NYC Open Data App Token取得
+- [×] NYC Open Data App Token取得
+  - https://data.cityofnewyork.us/profile/edit/developer_settings でトークン生成
+  - `.env` ファイルに設定（`.env.example`から作成）
+  - **Note**: Secret Tokenは不要（App Tokenのみ使用）
 
 ---
 
